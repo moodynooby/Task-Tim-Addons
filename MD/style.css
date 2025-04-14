@@ -1,0 +1,39 @@
+.header {
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.container {
+   text-align: center; 
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   padding: 5px;
+
+}
+
+.btn-info {
+    margin-top: 7px;
+}
+.btn-primary {
+    margin-left: 6px;
+}
+.select {
+    margin-left: 6px;
+}
+.video-container {
+    margin-top: 10px;
+    padding: 5px;
+    }
+
+#timer {
+    border: 5px solid var(--color-primary);
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
