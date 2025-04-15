@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" style="font-family: Zilla Slab , serif">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <link rel="icon" href="../gen_assets/dice.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen ">
+<div class="max-w-4xl mx-auto " style="max-width: 50%; min-width: 40%;">
+    <div class="card w-96 text-center space-y-8">
+        <div class="card-title">
+        </div>
+        <div class="card-body ">
+            <header >
+                <img src="../gen_assets/dice.png" class="mx-auto" style="width: 100px; height: 100px;">
+                <h1 class="text-primary" style="font-size: xx-large"> Random Number Generator</h1>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Minimum Value</span>
+                    </label>
+                    <input type="number" id="minValue" value="1" class="input input-bordered input-primary" />
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Maximum Value</span>
+                    </label>
+                    <input type="number" id="maxValue" value="100" class="input input-bordered input-primary " />
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">How Many Numbers?</span>
+                </label>
+                <input type="number" id="quantity" value="1" min="1" max="1000" class="input input-bordered" />
+            </div>
+
+            <div class="card-actions justify-end mt-4">
+                <button id="generateBtn" class="btn btn-primary w-full">
+                    Generate!
+                </button>
+                <button id="clearHistoryBtn" class="btn  btn-error">Clear History</button>
+
+            </div>
+
+            <div id="resultContainer" class="hidden ">
+                <div id="numbers" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div class="card bg-neutral text-neutral-content w-96 shadow-xl" >
+                <div class="card-body">
+                    <div class="flex justify-between items-center">
+                        <h2 class="card-title">Generation History</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra">
+                            <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Range</th>
+                                <th>Quantity</th>
+                                <th>Generated Numbers</th>
+                            </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+
+</div>
+<script src="./script.js"></script>
+</body>
+</html>
