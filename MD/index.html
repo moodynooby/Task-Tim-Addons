@@ -8,35 +8,28 @@
     </head>
     <body>
        
-    
+      
         <div class="container">
-            <header class="header">
-                <h1 class="text-5xl"><u><b>Meditation</b></u></h1> 
-                <a class="btn btn-info" href="https://mercury-sailor-874.notion.site/Meditation-1d45c51b91c580fe8397d7f27fffed94?pvs=4">Read the docs </a>
-            </header>
+            
             <div class="input-container">
                 <select class="select select-bordered w-full max-w-xs" id="meditationType">
                     <option disabled selected>Select the meditation</option>
                     <option value="deep-breathing">Deep Breathing</option>
                     <option value="box-breathing">Box Breathing</option>
                 </select>
-    
-                <select class="select select-bordered w-full max-w-xs" id="meditationDuration">
-                    <option disabled selected>Select the number of minutes</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="30">30</option>
-                </select>
-                
-                <button class="btn btn-primary" id="startButton">Start</button>
-                </div>
-                <div class="video-container " style="display: none;">
-                    <video id="meditationVideo" width="520" height="540" loop></video>
-                    <div id="timer" class="text-xl"></div>
-                </div>
+                <button class="btn btn-primary" id="startButton">Start</button>        
+                <button class="btn btn-primary" id="pauseButton">Pause/Restart</button>
+                <button class="btn btn-primary" id="stopButton">Stop</button>              
+            </div>
+            
+            <div class="video-container">
+                <h1 class="text-5xl"><u><b>Meditation</b></u></h1> 
+
+                <video id="meditationVideo" width="520" height="540" loop></video>
+                <div id="timer" class="text-xl"></div>
+            </div>
+            <div class="info-container">
+                <p id="meditationInfo"></p>
             </div>
         </div>
 
@@ -47,52 +40,78 @@
                 'box-breathing': 'src/BoxBreathing1.mp4'
             };
 
+            // Descriptions for different meditation types
+            const descriptions = {
+                'deep-breathing': 'Deep Breathing helps you relax and focus on your breath.',
+                'box-breathing': 'Box Breathing is a technique used to calm the mind and body and get ride of any stress.'
+            };
+
             // DOM elements
             const meditationType = document.getElementById('meditationType');
-            const meditationDuration = document.getElementById('meditationDuration');
             const startButton = document.getElementById('startButton');
+            const stopButton = document.getElementById('stopButton');
+            const pauseButton = document.getElementById('pauseButton');
+            const meditationInfo = document.getElementById('meditationInfo');
+            let videoState = 0; 
+            // 0 means video is paused , 1 means its ongoing
             const videoElement = document.getElementById('meditationVideo');
             const videoContainer = document.querySelector('.video-container');
             const timerElement = document.getElementById('timer');
 
             let countdownInterval;
 
+            // Update meditation info when selection changes
+            meditationType.addEventListener('change', () => {
+                const type = meditationType.value;
+                meditationInfo.textContent = descriptions[type] || '';
+            });
+
+            // Stop meditation when button is clicked
+            stopButton.addEventListener('click', () => {
+                videoElement.pause();
+                videoElement.currentTime = 0;
+                clearInterval(countdownInterval);
+                timerElement.textContent = '0:00';
+                videoState = 0; // Ensure videoState is reset
+            });
+
+            pauseButton.addEventListener('click', () => {
+                if (videoState === 0) {
+                    videoElement.play();
+                    videoState = 1; // Update videoState to ongoing
+                } else {
+                    videoElement.pause();
+                    videoState = 0; // Update videoState to paused
+                }
+            });
+
             // Start meditation when button is clicked
             startButton.addEventListener('click', () => {
                 const type = meditationType.value;
-                const duration = parseInt(meditationDuration.value);
                 
-                if (type === 'Select the meditation' || isNaN(duration)) {
-                    alert('Please select both a meditation type and duration');
+                if (type === 'Select the meditation') {
+                    alert('Please select meditation type');
                     return;
                 }
                 
                 // Set video source
                 videoElement.src = videos[type];
                 
-                // Show video container
-                videoContainer.style.display = 'block';
-                
                 // Play video
                 videoElement.play();
+                videoState = 1; // Update videoState to ongoing
                 
                 // Set up timer
-                let remainingSeconds = duration * 60;
-                updateTimerDisplay(remainingSeconds);
+                let stopwatchSeconds = 0;
+                updateTimerDisplay(stopwatchSeconds);
                 
-                // Clear any existing interval
                 if (countdownInterval) clearInterval(countdownInterval);
                 
                 // Start countdown
                 countdownInterval = setInterval(() => {
-                    remainingSeconds--;
-                    updateTimerDisplay(remainingSeconds);
-                    
-                    if (remainingSeconds <= 0) {
-                        clearInterval(countdownInterval);
-                        videoElement.pause();
-                        videoContainer.style.display = 'none';
-                        alert('Meditation session completed!');
+                    if (videoState === 1) {
+                        stopwatchSeconds++;
+                        updateTimerDisplay(stopwatchSeconds);
                     }
                 }, 1000);
             });
@@ -100,8 +119,8 @@
             // Format and display remaining time
             function updateTimerDisplay(seconds) {
                 const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = seconds % 60;
-                timerElement.textContent = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+                const stopwatchSeconds = seconds % 60;
+                timerElement.textContent = `${minutes}:${stopwatchSeconds.toString().padStart(2, '0')}`;
             }
         </script>
     </body>

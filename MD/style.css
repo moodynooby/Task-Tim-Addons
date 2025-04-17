@@ -1,16 +1,11 @@
-.header {
-    text-align: center;
-    padding: 5px;
-    margin-bottom: 10px;
-}
+
 
 .container {
    text-align: center; 
    display: flex;
-   justify-content: center;
-   align-items: center;
-   flex-direction: column;
+   justify-content: space-evenly;
    padding: 5px;
+    flex-wrap: wrap;
 
 }
 
@@ -25,15 +20,27 @@
 }
 .video-container {
     margin-top: 10px;
-    padding: 5px;
+    padding: 10px;
+    border-left: 5px solid var(--color-neutral-content);
     }
 
 #timer {
-    border: 5px solid var(--color-primary);
+    font-size: 1.5rem;
+    font-weight: bolder;
 }
 
 .input-container {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.meditationInfo {
+    font-size: 1.5rem;
+}
+
+.info-container {
+    border-left: 5px solid var(--color-neutral-content);
+    padding: 10px;
+    max-width: 30%;
 }
