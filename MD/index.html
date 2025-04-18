@@ -16,6 +16,7 @@
                     <option disabled selected>Select the meditation</option>
                     <option value="deep-breathing">Deep Breathing</option>
                     <option value="box-breathing">Box Breathing</option>
+                    <option value="progressive-muscle">Progressive Muscle Relaxations</option>
                 </select>
                 <button class="btn btn-primary" id="startButton">Start</button>        
                 <button class="btn btn-primary" id="pauseButton">Pause/Restart</button>
@@ -36,14 +37,16 @@
         <script>
             // Video paths for different meditation types
             const videos = {
-                'deep-breathing': 'src/DeepBreathing1.mp4',
-                'box-breathing': 'src/BoxBreathing1.mp4'
+                'deep-breathing': 'src/DeepBreathing2.mp4',
+                'box-breathing': 'src/BoxBreathing2.mp4',
+                'progressive-muscle':'src/ProgressiveMuscle2.mp4'
             };
 
             // Descriptions for different meditation types
             const descriptions = {
-                'deep-breathing': 'Deep Breathing helps you relax and focus on your breath.',
-                'box-breathing': 'Box Breathing is a technique used to calm the mind and body and get ride of any stress.'
+                'deep-breathing': 'Deep Breathing, also called 4-7-8 meditation, helps you relax and focus on your breath.',
+                'box-breathing': 'Box Breathing is a technique used to calm the mind and body and get ride of any stress.',
+                'progressive-muscle': 'Progressive Muscle Relaxations helps you relax your muscles and your brain ,make sure to not apply stress to any area where its prone to injury   .'
             };
 
             // DOM elements
