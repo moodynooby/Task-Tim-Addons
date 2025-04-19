@@ -17,6 +17,10 @@
                     <option value="deep-breathing">Deep Breathing</option>
                     <option value="box-breathing">Box Breathing</option>
                     <option value="progressive-muscle">Progressive Muscle Relaxations</option>
+                    <option value="sleep-meditation">Sleep Meditation</option>
+                    <option value="grounding-meditation">Grounding Meditation</option>
+
+
                 </select>
                 <button class="btn btn-primary" id="startButton">Start</button>        
                 <button class="btn btn-primary" id="pauseButton">Pause/Restart</button>
@@ -27,6 +31,7 @@
                 <h1 class="text-5xl"><u><b>Meditation</b></u></h1> 
 
                 <video id="meditationVideo" width="520" height="540" loop></video>
+                <iframe id="meditationIframe" width="520" height="540" style="display:none;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 <div id="timer" class="text-xl"></div>
             </div>
             <div class="info-container">
@@ -39,14 +44,20 @@
             const videos = {
                 'deep-breathing': 'src/DeepBreathing2.mp4',
                 'box-breathing': 'src/BoxBreathing2.mp4',
-                'progressive-muscle':'src/ProgressiveMuscle2.mp4'
+                'progressive-muscle': 'src/ProgressiveMuscle2.mp4',
+                'sleep-meditation': 'https://www.youtube.com/embed/U6Ay9v7gK9w?rel=0&amp;modestbranding=1&amp;controls=0&amp;loop=1' ,
+                'grounding-meditation': 'src/GroundingMeditation1.mp4'
+
             };
 
             // Descriptions for different meditation types
             const descriptions = {
                 'deep-breathing': 'Deep Breathing, also called 4-7-8 meditation, helps you relax and focus on your breath.',
-                'box-breathing': 'Box Breathing is a technique used to calm the mind and body and get ride of any stress.',
-                'progressive-muscle': 'Progressive Muscle Relaxations helps you relax your muscles and your brain ,make sure to not apply stress to any area where its prone to injury   .'
+                'box-breathing': 'Box Breathing is a technique used to calm the mind and body and get rid of any stress.',
+                'progressive-muscle': 'Progressive Muscle Relaxations helps you relax your muscles and your brain, make sure to not apply stress to any area where it\'s prone to injury.',
+                'sleep-meditation': 'Sleep Meditation helps you relax and prepare for a restful night\'s sleep.' ,
+                'grounding-meditation': 'Ground yourself like a rock.' 
+
             };
 
             // DOM elements
@@ -97,12 +108,18 @@
                     return;
                 }
                 
-                // Set video source
-                videoElement.src = videos[type];
-                
-                // Play video
-                videoElement.play();
-                videoState = 1; // Update videoState to ongoing
+                // Toggle video and iframe visibility
+                if (type === 'sleep-meditation') {
+                    videoElement.style.display = 'none';
+                    meditationIframe.style.display = 'block';
+                    meditationIframe.src = videos[type];
+                } else {
+                    meditationIframe.style.display = 'none';
+                    videoElement.style.display = 'block';
+                    videoElement.src = videos[type];
+                    videoElement.play();
+                    videoState = 1; // Update videoState to ongoing
+                }
                 
                 // Set up timer
                 let stopwatchSeconds = 0;
