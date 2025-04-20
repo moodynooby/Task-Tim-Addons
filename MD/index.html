@@ -1,42 +1,42 @@
 <html data-theme="dark">
     <head>
         <title>Meditation</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link href="style.css" rel="stylesheet" type="text/css" />
         <link href="../gen_assets/Chill.png" rel="icon" />
     </head>
     <body>
-       
-      
         <div class="container">
-            
-            <div class="input-container">
-                <select class="select select-bordered w-full max-w-xs" id="meditationType">
-                    <option disabled selected>Select the meditation</option>
-                    <option value="deep-breathing">Deep Breathing</option>
-                    <option value="box-breathing">Box Breathing</option>
-                    <option value="progressive-muscle">Progressive Muscle Relaxations</option>
-                    <option value="sleep-meditation">Sleep Meditation</option>
-                    <option value="grounding-meditation">Grounding Meditation</option>
-
-
-                </select>
-                <button class="btn btn-primary" id="startButton">Start</button>        
-                <button class="btn btn-primary" id="pauseButton">Pause/Restart</button>
-                <button class="btn btn-primary" id="stopButton">Stop</button>              
+                <div role="tablist" class="tabs tabs-box">
+                    <a class="tab tab-active" data-value="home">Home</a>
+                    <a class="tab" data-value="deep-breathing">Deep Breathing</a>
+                    <a class="tab" data-value="box-breathing">Box Breathing</a>
+                    <a class="tab" data-value="progressive-muscle">Progressive Muscle Relaxations</a>
+                    <a class="tab" data-value="sleep-meditation">Sleep Meditation</a>
+                    <a class="tab" data-value="grounding-meditation">Grounding Meditation</a>
+                            
             </div>
             
-            <div class="video-container">
+            <div class="app-container">
                 <h1 class="text-5xl"><u><b>Meditation</b></u></h1> 
-
+                <div class="video-container">
                 <video id="meditationVideo" width="520" height="540" loop></video>
                 <iframe id="meditationIframe" width="520" height="540" style="display:none;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
                 <div id="timer" class="text-xl"></div>
+                <div class="input-container">
+
+                <button class="btn btn-primary" id="startButton"><i class="bi bi-arrow-repeat"></i></button>        
+                <button class="btn btn-primary" id="pauseButton"><i class="bi bi-pause"></i><i class="bi bi-play"></i></button>
+                <button class="btn btn-primary" id="stopButton"><i class="bi bi-stop"></i></button>
             </div>
-            <div class="info-container">
+
                 <p id="meditationInfo"></p>
+
             </div>
+           
         </div>
 
         <script>
@@ -45,9 +45,8 @@
                 'deep-breathing': 'src/DeepBreathing2.mp4',
                 'box-breathing': 'src/BoxBreathing2.mp4',
                 'progressive-muscle': 'src/ProgressiveMuscle2.mp4',
-                'sleep-meditation': 'https://www.youtube.com/embed/U6Ay9v7gK9w?rel=0&amp;modestbranding=1&amp;controls=0&amp;loop=1' ,
+                'sleep-meditation': 'https://www.youtube.com/embed/U6Ay9v7gK9w?rel=0&amp;modestbranding=1&amp;controls=0&amp;loop=1',
                 'grounding-meditation': 'src/GroundingMeditation1.mp4'
-
             };
 
             // Descriptions for different meditation types
@@ -55,29 +54,33 @@
                 'deep-breathing': 'Deep Breathing, also called 4-7-8 meditation, helps you relax and focus on your breath.',
                 'box-breathing': 'Box Breathing is a technique used to calm the mind and body and get rid of any stress.',
                 'progressive-muscle': 'Progressive Muscle Relaxations helps you relax your muscles and your brain, make sure to not apply stress to any area where it\'s prone to injury.',
-                'sleep-meditation': 'Sleep Meditation helps you relax and prepare for a restful night\'s sleep.' ,
-                'grounding-meditation': 'Ground yourself like a rock.' 
-
+                'sleep-meditation': 'Sleep Meditation helps you relax and prepare for a restful night\'s sleep.',
+                'grounding-meditation': 'Ground yourself like a rock.'
             };
 
             // DOM elements
-            const meditationType = document.getElementById('meditationType');
+            const tabs = document.querySelectorAll('.tab');
             const startButton = document.getElementById('startButton');
             const stopButton = document.getElementById('stopButton');
             const pauseButton = document.getElementById('pauseButton');
             const meditationInfo = document.getElementById('meditationInfo');
-            let videoState = 0; 
+            let videoState = 0;
             // 0 means video is paused , 1 means its ongoing
             const videoElement = document.getElementById('meditationVideo');
             const videoContainer = document.querySelector('.video-container');
             const timerElement = document.getElementById('timer');
+            let currentTab = 'home';
 
             let countdownInterval;
 
-            // Update meditation info when selection changes
-            meditationType.addEventListener('change', () => {
-                const type = meditationType.value;
-                meditationInfo.textContent = descriptions[type] || '';
+            // Handle tab clicks
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('tab-active'));
+                    tab.classList.add('tab-active');
+                    currentTab = tab.dataset.value;
+                    meditationInfo.textContent = descriptions[currentTab] || '';
+                });
             });
 
             // Stop meditation when button is clicked
@@ -101,22 +104,20 @@
 
             // Start meditation when button is clicked
             startButton.addEventListener('click', () => {
-                const type = meditationType.value;
-                
-                if (type === 'Select the meditation') {
-                    alert('Please select meditation type');
+                if (currentTab === 'home') {
+                    alert('Please select a meditation type');
                     return;
                 }
                 
                 // Toggle video and iframe visibility
-                if (type === 'sleep-meditation') {
+                if (currentTab === 'sleep-meditation') {
                     videoElement.style.display = 'none';
                     meditationIframe.style.display = 'block';
-                    meditationIframe.src = videos[type];
+                    meditationIframe.src = videos[currentTab];
                 } else {
                     meditationIframe.style.display = 'none';
                     videoElement.style.display = 'block';
-                    videoElement.src = videos[type];
+                    videoElement.src = videos[currentTab];
                     videoElement.play();
                     videoState = 1; // Update videoState to ongoing
                 }
