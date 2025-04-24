@@ -1,4 +1,4 @@
-    // Initialize history from localStorage or empty array
+// Initialize history from localStorage or empty array
     let history = JSON.parse(localStorage.getItem('rngHistory') || '[]');
     updateHistoryTable();
 
@@ -27,13 +27,24 @@
         numbersDiv.innerHTML = 'Answer/s:';
         randomNumbers.forEach(num => {
             const span = document.createElement('span');
-            span.className = 'badge badge-lg bg-primary text-base-100';
+            span.className = 'badge badge-lg bg-primary text-base-100 animated slideUp';
             span.textContent = num;
             numbersDiv.appendChild(span);
+            
+            // Remove animation class after animation completes
+            span.addEventListener('animationend', () => {
+                span.classList.remove('animated', 'slideUp');
+            }, { once: true });
         });
 
-        // Show results
+        // Show results with animation
         resultContainer.classList.remove('hidden');
+        resultContainer.classList.add('animated', 'fadeIn');
+        
+        // Remove animation class after animation completes
+        resultContainer.addEventListener('animationend', () => {
+            resultContainer.classList.remove('animated', 'fadeIn');
+        }, { once: true });
 
         // Save to history
         saveToHistory(minValue, maxValue, quantity, randomNumbers);

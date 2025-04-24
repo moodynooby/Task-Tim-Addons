@@ -2,7 +2,11 @@
     font-size: 1.5em
 }
 
-
+#home-content {
+    text-align: center;
+    text-decoration: wavy;
+    font-size: 1.4rem;
+}
 .dock button:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
@@ -12,5 +16,104 @@
 }
 .active-tab {
     display: block;
+}
+
+/* Animation Classes */
+.animated {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+}
+
+/* Pulse animation for buttons */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation-name: pulse;
+}
+
+/* Fade in animation for content */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+    from { 
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slideUp {
+    animation-name: slideUp;
+}
+
+/* Button click animation */
+@keyframes btnClick {
+    0% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.btn-click {
+    animation-name: btnClick;
+    animation-duration: 0.15s;
+}
+
+/* Continuous slow pulse animation */
+@keyframes pulse-slow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+.pulse-slow {
+    animation-name: pulse-slow;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/* Video fade in and scale animation */
+@keyframes videoAppear {
+    from { 
+        opacity: 0; 
+        transform: scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.video-appear {
+    animation-name: videoAppear;
+    animation-duration: 0.8s;
+}
+
+/* Breathing animation for meditation */
+@keyframes breathing {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.03); }
+    60% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+.breathing {
+    animation-name: breathing;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }
 

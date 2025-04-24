@@ -1,4 +1,4 @@
-<html data-theme="dark">
+<html data-theme="dim">
     <head>
         <title>Meditation</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -6,10 +6,14 @@
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link href="style.css" rel="stylesheet" type="text/css" />
         <link href="../gen_assets/Chill.png" rel="icon" />
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div class="container">
-                <div role="tablist" class="tabs tabs-box">
+            <h1 class="text-3xl"><u><b>Meditation</b></u></h1> 
+
+                <div role="tablist" class="tabs tabs-border bg-base-300">
                     <a class="tab tab-active" data-value="home">Home</a>
                     <a class="tab" data-value="deep-breathing">Deep Breathing</a>
                     <a class="tab" data-value="box-breathing">Box Breathing</a>
@@ -20,7 +24,6 @@
             </div>
             
             <div class="app-container">
-                <h1 class="text-5xl"><u><b>Meditation</b></u></h1> 
                 <div class="video-container">
                 <video id="meditationVideo" width="520" height="540" loop></video>
                 <iframe id="meditationIframe" width="520" height="540" style="display:none;" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -28,9 +31,9 @@
                 <div id="timer" class="text-xl"></div>
                 <div class="input-container">
 
-                <button class="btn btn-primary" id="startButton"><i class="bi bi-arrow-repeat"></i></button>        
-                <button class="btn btn-primary" id="pauseButton"><i class="bi bi-pause"></i><i class="bi bi-play"></i></button>
-                <button class="btn btn-primary" id="stopButton"><i class="bi bi-stop"></i></button>
+                <button class="btn btn-primary animated" id="startButton"><i class="bi bi-arrow-repeat"></i></button>        
+                <button class="btn btn-primary animated" id="pauseButton"><i class="bi bi-pause"></i><i class="bi bi-play"></i></button>
+                <button class="btn btn-primary animated" id="stopButton"><i class="bi bi-stop"></i></button>
             </div>
 
                 <p id="meditationInfo"></p>
@@ -73,13 +76,35 @@
 
             let countdownInterval;
 
-            // Handle tab clicks
+            // Handle tab clicks with animation
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('tab-active'));
-                    tab.classList.add('tab-active');
-                    currentTab = tab.dataset.value;
-                    meditationInfo.textContent = descriptions[currentTab] || '';
+                    // Remove active class from all tabs with fade transition
+                    tabs.forEach(t => {
+                        t.style.transition = 'opacity 0.3s ease-out';
+                        t.style.opacity = '0.5';
+                        t.classList.remove('tab-active');
+                    });
+
+                    // Add active class to clicked tab with fade transition
+                    requestAnimationFrame(() => {
+                        tab.style.transition = 'opacity 0.3s ease-in';
+                        tab.style.opacity = '1';
+                        tab.classList.add('tab-active');
+                    });
+
+                    // Slide animation for content change
+                    meditationInfo.style.opacity = '0';
+                    meditationInfo.style.transform = 'translateY(-10px)';
+                    meditationInfo.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+
+                    // Update current tab and content with animation
+                    setTimeout(() => {
+                        currentTab = tab.dataset.value;
+                        meditationInfo.textContent = descriptions[currentTab] || '';
+                        meditationInfo.style.opacity = '1';
+                        meditationInfo.style.transform = 'translateY(0)';
+                    }, 300);
                 });
             });
 
@@ -109,15 +134,17 @@
                     return;
                 }
                 
-                // Toggle video and iframe visibility
+                // Toggle video and iframe visibility with animation
                 if (currentTab === 'sleep-meditation') {
                     videoElement.style.display = 'none';
                     meditationIframe.style.display = 'block';
                     meditationIframe.src = videos[currentTab];
+                    meditationIframe.classList.add('video-appear');
                 } else {
                     meditationIframe.style.display = 'none';
                     videoElement.style.display = 'block';
                     videoElement.src = videos[currentTab];
+                    videoElement.classList.add('video-appear', 'breathing');
                     videoElement.play();
                     videoState = 1; // Update videoState to ongoing
                 }
@@ -135,6 +162,35 @@
                         updateTimerDisplay(stopwatchSeconds);
                     }
                 }, 1000);
+            });
+
+            // Add animation to pause button
+            pauseButton.addEventListener('click', () => {
+                pauseButton.classList.add('pulse');
+                setTimeout(() => pauseButton.classList.remove('pulse'), 300);
+                
+                if (videoState === 0) {
+                    videoElement.play();
+                    videoState = 1; // Update videoState to ongoing
+                    videoElement.classList.add('breathing');
+                } else {
+                    videoElement.pause();
+                    videoState = 0; // Update videoState to paused
+                    videoElement.classList.remove('breathing');
+                }
+            });
+
+            // Add animation to stop button
+            stopButton.addEventListener('click', () => {
+                stopButton.classList.add('pulse');
+                setTimeout(() => stopButton.classList.remove('pulse'), 300);
+                
+                videoElement.pause();
+                videoElement.currentTime = 0;
+                videoElement.classList.remove('breathing', 'video-appear');
+                clearInterval(countdownInterval);
+                timerElement.textContent = '0:00';
+                videoState = 0; // Ensure videoState is reset
             });
 
             // Format and display remaining time

@@ -1,9 +1,14 @@
-<html data-theme="dark">
+<html data-theme="dim">
     <head><title>Task Tim Toolbox</title>
         <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="/global.css" rel="stylesheet" type="text/css" />
+        <link href="/gen_assets/icon.png" rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+
         <style>
         </style>
     </head>
@@ -15,7 +20,7 @@
                 <span class="dock-label">Home</span>
             </button>
             
-            <button id="meditation-tab">
+            <button id="meditation-tab" class="animated pulse-slow">
                 <i class="bi bi-peace"></i>
                 <span class="dock-label">Meditation</span>
             </button>
@@ -30,7 +35,10 @@
         <div id="home-content" class="tab-content active-tab">
             <h1 class="text-2xl font-bold">Welcome to Task Tim Toolbox</h1>
             <p>Select a tool from the dock  to get started.</p>
-            <p>This Is A collection of nifty tools</p>
+            <br>
+            <p>Check out these tools in dedicated windows</p>
+            <a href="./MD/index.html" class="btn btn-primary">Meditation</a>
+            <a href="./ sRNG/index.html" class="btn btn-primary">RNG</a>
         </div>
 
         <div id="meditation-content" class="tab-content">
