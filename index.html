@@ -7,10 +7,7 @@
         <link href="/gen_assets/icon.png" rel="icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-
-
-        <style>
-        </style>
+        <link rel="manifest" href="manifest.json" />
     </head>
     <body>
       
@@ -29,6 +26,15 @@
                 <i class="bi bi-dice-5" ></i>
                  <span class="dock-label">RNG</span>
             </button>
+            <button id="feeds-tab">
+                <i class="bi bi-rss"></i>
+                <span class="dock-label">Feeds</span>
+            </button>
+
+            <button id="notes-tab">
+                <i class="bi bi-sticky"></i>
+                <span class="dock-label">Notes</span>
+            </button>
         </div>
 
         <!-- Tab content sections -->
@@ -38,7 +44,10 @@
             <br>
             <p>Check out these tools in dedicated windows</p>
             <a href="./MD/index.html" class="btn btn-primary">Meditation</a>
-            <a href="./ sRNG/index.html" class="btn btn-primary">RNG</a>
+            <a href="./RNG/index.html" class="btn btn-primary">RNG</a>       
+            <a href="./Feeds/index.html" class="btn btn-primary">Feeds</a>
+            <a href="./Notes/index.html" class="btn btn-primary">Notes</a>
+
         </div>
 
         <div id="meditation-content" class="tab-content">
